@@ -83,6 +83,7 @@ def test_run_dictionary_attack_respects_max_candidates():
         algo="md5",
         candidates=candidates,
         max_candidates=2,
+        use_multiprocessing=False,
     )
 
     result = run_dictionary_attack(config)
