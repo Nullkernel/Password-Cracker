@@ -1,5 +1,4 @@
 import hashlib
-import os
 
 import pytest
 
@@ -60,6 +59,8 @@ def test_cli_watch_invokes_watch_folder(monkeypatch):
     assert called["max_bruteforce_length"] == 5
     # no-mp -> use_multiprocessing=False
     assert called["use_multiprocessing"] is False
+    assert called["enable_rules"] is True
+    assert called["enable_mask"] is False
 
 
 def test_api_crack_single_hash(tmp_path, monkeypatch):
@@ -107,10 +108,15 @@ def test_watch_folder_processes_new_file_and_writes_results(tmp_path, monkeypatc
     Run watch_folder in a controlled way by forcing the polling loop to stop
     after the first sleep, and assert that a result directory was created.
     """
+    monkeypatch.chdir(tmp_path)
+
     incoming_dir = tmp_path / "incoming"
     incoming_dir.mkdir()
 
-    wordlist_path = tmp_path / "wordlist.txt"
+    wordlist_dir = tmp_path / "wordlist"
+    wordlist_dir.mkdir()
+    wordlist_path = wordlist_dir / "rockyou.txt"
+
     password = "secret"
     target_hash = hashlib.md5(password.encode()).hexdigest()
     wordlist_path.write_text(f"{password}\nother\n", encoding="latin-1")
