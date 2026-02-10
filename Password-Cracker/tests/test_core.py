@@ -6,10 +6,14 @@ from argon2 import PasswordHasher
 from cracker.core import (
     BruteForceConfig,
     DictionaryAttackConfig,
+    MaskAttackConfig,
+    RuleAttackConfig,
     detect_hash_algo,
     hash_password,
     run_bruteforce_attack,
     run_dictionary_attack,
+    run_mask_attack,
+    run_rule_attack,
 )
 
 
