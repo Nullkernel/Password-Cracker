@@ -67,6 +67,7 @@ def test_run_dictionary_attack_finds_password():
         algo="md5",
         candidates=candidates,
         max_candidates=None,
+        use_multiprocessing=False,
     )
 
     result = run_dictionary_attack(config)
