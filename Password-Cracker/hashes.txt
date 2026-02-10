@@ -1,0 +1,1 @@
+<For multi-hash cracking mode, remove this and paste the list of hashes here one per line>

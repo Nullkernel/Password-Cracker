@@ -1,0 +1,6 @@
+bcrypt
+argon2-cffi
+tqdm
+rich
+flask
+pytest

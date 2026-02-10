@@ -1,0 +1,26 @@
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Byte-compiled / built
+*.egg-info/
+dist/
+build/
+
+# OS/IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Logs, runtime files
+*.log
+cracker_resume.json
+
+# Ignore sensitive local configs
+.env

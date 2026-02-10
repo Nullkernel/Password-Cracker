@@ -1,0 +1,15 @@
+>run cmd as admin
+
+>enter: [cd "-Path of main-"]
+
+>enter: [python install.py]
+
+>now (with multiprocessing): [python password_cracker.py]
+{or}
+>Disable multiprocessing (optional): [python password_cracker.py --no-mp]            {requires more time}
+
+>Set output folder (optional): [python password_cracker.py --output-dir "-Custom path and name for your cracked results-"]
+
+>To limit how many wordlist lines get checked (optional): [python password_cracker.py --max-lines -no.of.lines-]
+
+give code for: Validate that selected wordlist is within wordlist/ for safety, explain: Generate a .bat file so you can double-click to run it easily on Windows, give code for: Add a “live monitoring” mode to watch a folder and auto-crack new hashes added, explain: Show how to wrap this into a Flask API for real-time web use

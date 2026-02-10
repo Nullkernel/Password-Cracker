@@ -1,0 +1,7 @@
+# Example pinned dependencies - replace <pin-version> with tested versions
+bcrypt==<pin-version>
+argon2-cffi==<pin-version>
+tqdm==<pin-version>
+rich==<pin-version>
+flask==<pin-version>
+pytest==<pin-version>
