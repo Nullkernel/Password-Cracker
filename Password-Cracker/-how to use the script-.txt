@@ -4,12 +4,24 @@
 
 >enter: [python install.py]
 
->now (with multiprocessing): [python password_cracker.py]
-{or}
->Disable multiprocessing (optional): [python password_cracker.py --no-mp]            {requires more time}
+>interactive mode:
+[python password_cracker.py]
 
->Set output folder (optional): [python password_cracker.py --output-dir "-Custom path and name for your cracked results-"]
+>non-interactive example:
+[python password_cracker.py --hash <hash> --wordlist wordlist/rockyou.txt --maxlen 5]
 
->To limit how many wordlist lines get checked (optional): [python password_cracker.py --max-lines -no.of.lines-]
+>Disable multiprocessing (optional):
+[python password_cracker.py --no-mp]
 
-give code for: Validate that selected wordlist is within wordlist/ for safety, explain: Generate a .bat file so you can double-click to run it easily on Windows, give code for: Add a “live monitoring” mode to watch a folder and auto-crack new hashes added, explain: Show how to wrap this into a Flask API for real-time web use
+>Set output folder (optional):
+[python password_cracker.py --output-dir "-Custom path and name for your cracked results-"]
+
+>To limit how many wordlist lines get checked (optional):
+[python password_cracker.py --max-lines -no.of.lines-]
+
+>Watch mode (live monitoring):
+[python password_cracker.py --watch --watch-folder incoming_hashes]
+
+>Safety defaults:
+- Wordlists must be inside wordlist/ unless you pass --allow-external-wordlist
+- API is local-only by default (see README for details)
