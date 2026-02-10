@@ -13,7 +13,7 @@ from __future__ import annotations
 import hashlib
 import itertools
 import logging
-import math
+
 import string
 from dataclasses import dataclass
 from typing import Iterable, Optional, Sequence
