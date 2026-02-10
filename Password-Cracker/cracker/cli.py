@@ -413,7 +413,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         max_mask_candidates=args.max_mask_candidates,
         ruleset=ruleset,
         max_rule_candidates=args.max_rule_candidates,
-        max_rule_variants_per_word=args.max_rule_variants,
+        max_rule_variants_per_word=
+        args.max_rule_variants if args.max_rule_variants is not None else 48,
         algo_override=args.algo,
         allow_external_wordlist=args.allow_external_wordlist,
         allow_external_hash_file=args.allow_external_hash_file,
