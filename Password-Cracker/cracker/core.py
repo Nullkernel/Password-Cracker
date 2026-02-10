@@ -230,37 +230,53 @@ def _generate_rule_variants(
 ) -> list[str]:
     variants: list[str] = []
     seen: set[str] = set()
+    base_variants: list[str] = []
 
     def push(value: str) -> None:
         if value and value not in seen:
             seen.add(value)
             variants.append(value)
 
+    def push_base(value: str) -> None:
+        if value and value not in base_variants:
+            base_variants.append(value)
+            push(value)
+
     base = word
-    push(base)
+    push_base(base)
 
     if "lower" in ruleset:
-        push(base.lower())
+        push_base(base.lower())
     if "upper" in ruleset:
-        push(base.upper())
+        push_base(base.upper())
     if "capitalize" in ruleset:
-        push(base.capitalize())
+        push_base(base.capitalize())
     if "swapcase" in ruleset:
-        push(base.swapcase())
+        push_base(base.swapcase())
     if "reverse" in ruleset:
-        push(base[::-1])
+        push_base(base[::-1])
     if "leet" in ruleset:
-        push(base.translate(LEET_TABLE))
-        push(base.lower().translate(LEET_TABLE))
-    if "append_digits" in ruleset:
-        for i in range(0, 100):
-            push(f"{base}{i}")
-    if "prepend_digits" in ruleset:
-        for i in range(0, 100):
-            push(f"{i}{base}")
-    if "append_symbols" in ruleset:
-        for symbol in ("!", "@", "#", "$"):
-            push(f"{base}{symbol}")
+        push_base(base.translate(LEET_TABLE))
+        push_base(base.lower().translate(LEET_TABLE))
+
+    if any(rule in ruleset for rule in ("append_digits", "prepend_digits", "append_symbols")):
+        affix_bases = list(base_variants)
+        for root in affix_bases:
+            if "append_digits" in ruleset:
+                for i in range(0, 100):
+                    push(f"{root}{i}")
+                    if len(variants) >= max_variants_per_word:
+                        return variants[:max_variants_per_word]
+            if "prepend_digits" in ruleset:
+                for i in range(0, 100):
+                    push(f"{i}{root}")
+                    if len(variants) >= max_variants_per_word:
+                        return variants[:max_variants_per_word]
+            if "append_symbols" in ruleset:
+                for symbol in ("!", "@", "#", "$"):
+                    push(f"{root}{symbol}")
+                    if len(variants) >= max_variants_per_word:
+                        return variants[:max_variants_per_word]
 
     return variants[:max_variants_per_word]
 
