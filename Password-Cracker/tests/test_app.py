@@ -1,5 +1,6 @@
 import hashlib
-import os
+
+import pytest
 
 from cracker.app import (
     CrackJobConfig,
@@ -9,10 +10,15 @@ from cracker.app import (
     run_crack_job,
     write_results,
 )
+from cracker.security import InvalidPathError
 
 
-def test_run_crack_job_with_small_wordlist(tmp_path):
-    wordlist_path = tmp_path / "wordlist.txt"
+def test_run_crack_job_with_small_wordlist(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+
+    wordlist_dir = tmp_path / "wordlist"
+    wordlist_dir.mkdir()
+    wordlist_path = wordlist_dir / "rockyou.txt"
     hashes_path = tmp_path / "hashes.txt"
 
     password = "secret"
@@ -23,7 +29,7 @@ def test_run_crack_job_with_small_wordlist(tmp_path):
 
     config = CrackJobConfig(
         hashes=[target_hash],
-        wordlist_path=str(wordlist_path),
+        wordlist_path="wordlist/rockyou.txt",
         max_bruteforce_length=3,
         use_multiprocessing=False,
         max_wordlist_lines=None,
@@ -66,13 +72,32 @@ def test_list_wordlists_and_load_hashes_from_file(tmp_path, monkeypatch):
     wordlist_file.write_text("one\ntwo\nthree\n", encoding="latin-1")
 
     files = list_wordlists(base_dir=str(base_dir))
-    # list_wordlists always prefixes entries with \"wordlist/\" regardless of base_dir.
+    # list_wordlists always prefixes entries with "wordlist/" regardless of base_dir.
     assert any("wordlist/mylist.lst" in f for f in files)
 
     # Now test load_hashes_from_file separately.
+    monkeypatch.chdir(tmp_path)
     hashes_file = tmp_path / "hashes.txt"
     hashes_file.write_text("h1\n\nh2\n", encoding="utf-8")
 
-    hashes = load_hashes_from_file(str(hashes_file))
+    hashes = load_hashes_from_file("hashes.txt")
     assert hashes == ["h1", "h2"]
+
+
+def test_run_crack_job_rejects_external_wordlist(tmp_path):
+    wordlist_path = tmp_path / "external.txt"
+    wordlist_path.write_text("secret\n", encoding="latin-1")
+
+    password = "secret"
+    target_hash = hashlib.md5(password.encode()).hexdigest()
+
+    config = CrackJobConfig(
+        hashes=[target_hash],
+        wordlist_path=str(wordlist_path),
+        max_bruteforce_length=2,
+        use_multiprocessing=False,
+    )
+
+    with pytest.raises(InvalidPathError):
+        run_crack_job(config)
 
