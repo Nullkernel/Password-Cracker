@@ -83,6 +83,39 @@ def test_run_dictionary_attack_respects_max_candidates():
     result = run_dictionary_attack(config)
     assert result is None
 
+def test_run_rule_attack_finds_password():
+    password = "Secret1"
+    target = hashlib.sha256(password.encode()).hexdigest()
+
+    config = RuleAttackConfig(
+        hash_to_crack=target,
+        algo="sha256",
+        base_words=["secret"],
+        ruleset=["capitalize", "append_digits"],
+        max_candidates=200,
+        max_variants_per_word=100,
+        use_multiprocessing=False,
+    )
+
+    result = run_rule_attack(config)
+    assert result == password
+
+
+def test_run_mask_attack_finds_password():
+    password = "ab1"
+    target = hashlib.sha1(password.encode()).hexdigest()
+
+    config = MaskAttackConfig(
+        hash_to_crack=target,
+        algo="sha1",
+        masks=["?l?l?d"],
+        max_candidates=100,
+        use_multiprocessing=False,
+    )
+
+    result = run_mask_attack(config)
+    assert result == password
+
 
 def test_run_bruteforce_attack_finds_password_no_multiprocessing():
     # Very small search space so this stays fast.
