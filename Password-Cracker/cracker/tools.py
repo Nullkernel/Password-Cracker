@@ -82,6 +82,7 @@ def watch_folder(
                 hashes = load_hashes_from_file(
                     fpath,
                     allow_external=allow_external_hash_file,
+                    base_dir=folder,
                 )
             except CrackerError as exc:
                 console.print(f"[red]❌ Failed to read hashes:[/] {exc}")
