@@ -107,6 +107,12 @@ def crack() -> Any:
 
     use_mp = bool(payload.get("use_multiprocessing", True))
     max_lines = payload.get("max_wordlist_lines")
+    try:
+        if max_lines is not None:
+            max_lines = int(max_lines)
+    except (TypeError, ValueError):
+        max_lines = None
+
     attack_order = _parse_attack_order(payload.get("attack_order"))
     ruleset = _parse_ruleset(payload.get("ruleset"))
 
@@ -120,6 +126,27 @@ def crack() -> Any:
     if enable_mask and not mask_patterns:
         mask_patterns = list(DEFAULT_MASKS)
 
+    max_mask_candidates = payload.get("max_mask_candidates")
+    max_rule_candidates = payload.get("max_rule_candidates")
+    max_rule_variants = payload.get("max_rule_variants_per_word", 48)
+
+    try:
+        if max_mask_candidates is not None:
+            max_mask_candidates = int(max_mask_candidates)
+    except (TypeError, ValueError):
+        max_mask_candidates = None
+
+    try:
+        if max_rule_candidates is not None:
+            max_rule_candidates = int(max_rule_candidates)
+    except (TypeError, ValueError):
+        max_rule_candidates = None
+
+    try:
+        max_rule_variants = int(max_rule_variants)
+    except (TypeError, ValueError):
+        max_rule_variants = 48
+
     cfg = CrackJobConfig(
         hashes=hashes,
         wordlist_path=wordlist,
@@ -130,10 +157,10 @@ def crack() -> Any:
         enable_rules=enable_rules,
         enable_mask=enable_mask,
         mask_patterns=mask_patterns,
-        max_mask_candidates=payload.get("max_mask_candidates"),
+        max_mask_candidates=max_mask_candidates,
         ruleset=ruleset,
-        max_rule_candidates=payload.get("max_rule_candidates"),
-        max_rule_variants_per_word=payload.get("max_rule_variants_per_word", 48),
+        max_rule_candidates=max_rule_candidates,
+        max_rule_variants_per_word=max_rule_variants,
         algo_override=payload.get("algo"),
         allow_external_wordlist=allow_external_wordlist,
         allow_external_hash_file=allow_external_hash_file,
