@@ -33,8 +33,6 @@ from .core import (
 from .security import InvalidConfigError, resolve_hash_file_path, resolve_wordlist_path
 
 
-console = Console()
-
 ATTACK_STAGES = ("dictionary", "rules", "mask", "bruteforce")
 
 
