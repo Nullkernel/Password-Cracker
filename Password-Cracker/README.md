@@ -166,7 +166,7 @@ Response:
 
 - **Local-only API**: non-local requests receive HTTP 403.
 - **Path validation**: wordlists must live inside `wordlist/` unless you pass `--allow-external-wordlist` (or `allow_external_wordlist` in API).
-- **Hash files**: only files inside the working directory are accepted unless explicitly allowed.
+- **Hash files**: only files inside the working directory are accepted unless explicitly allowed (`--allow-external-hash-file` or `allow_external_hash_file`).
 - **Debug disabled**: the API defaults to `debug=False` when launched directly.
 
 ---
