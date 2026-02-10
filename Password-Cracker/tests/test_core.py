@@ -99,7 +99,7 @@ def test_run_rule_attack_finds_password():
         base_words=["secret"],
         ruleset=["capitalize", "append_digits"],
         max_candidates=200,
-        max_variants_per_word=100,
+        max_variants_per_word=150,
         use_multiprocessing=False,
     )
 
