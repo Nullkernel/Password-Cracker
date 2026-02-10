@@ -15,8 +15,6 @@ import os
 from dataclasses import dataclass, field
 from typing import List, Optional, Sequence, Tuple
 
-from rich.console import Console
-
 from .core import (
     BruteForceConfig,
     COMMON_PASSWORDS,
