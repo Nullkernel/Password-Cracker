@@ -50,7 +50,7 @@ def test_cli_watch_invokes_watch_folder(monkeypatch):
     def fake_watch_folder(**kwargs):
         called.update(kwargs)
 
-    monkeypatch.setattr(cli_mod, "watch_folder", fake_watch_folder)
+    monkeypatch.setattr(tools, "watch_folder", fake_watch_folder)
 
     exit_code = cli_mod.main(["--watch", "--watch-folder", "somefolder", "--no-mp"])
     assert exit_code == 0
