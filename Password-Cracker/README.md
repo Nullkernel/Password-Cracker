@@ -1,13 +1,11 @@
-# Password Cracker — Cleaned & Repository-Ready
+# Password Cracker
 **Purpose:** Educational / authorized security research only. Do **NOT** use this tool on systems you do not own or have explicit consent to test.
 
 ## What this cleaned package contains
 - Source code (cleaned to exclude bundled virtual environment)
-- `.gitignore`
 - `requirements.txt` (original)
-- `requirements-pinned.txt` (example pinned entries — verify before use)
-- `LICENSE` (MIT suggested)
-- Suggested `README_suggested.md` (this file)
+- `requirements-pinned.txt` (example pinned entries - to use your preferred version of packages)
+- `README.md` (this file)
 
 ## Responsible use & disclaimer
 This repository is intended for defensive, educational, and authorized security testing. By using this code you agree to only run it against systems and hashes you own or have explicit permission to test. The authors are **not** responsible for misuse.
